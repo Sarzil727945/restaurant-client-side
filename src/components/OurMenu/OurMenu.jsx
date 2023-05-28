@@ -5,8 +5,7 @@ import menuImg from '../../assets/menu/banner3.jpg'
 import dessertImg from '../../assets/menu/dessert-bg.jpeg'
 import pizzaImg from '../../assets/menu/pizza-bg.jpg'
 import saladImg from '../../assets/menu/salad-bg.jpg'
-import MenuItem from '../../shared/MenuItem/MenuItem';
-import PopularMenu from '../Home/PopularMenu/PopularMenu';
+import soupImg from '../../assets/menu/soup-bg.jpg'
 import useMenu from '../../hooks/useMenu';
 import SectionTitle from '../../shared/SectionTitle/SectionTitle';
 import MenuCategory from './MenuCategory/MenuCategory';
@@ -14,9 +13,7 @@ import MenuCategory from './MenuCategory/MenuCategory';
 const OurMenu = () => {
      useTitle('Our Menu')
      const [menu] = useMenu();
-     const popular = menu.filter(item => item.category === "popular")
      const salad = menu.filter(item => item.category === "salad")
-     const drinks = menu.filter(item => item.category === "drinks")
      const dessert = menu.filter(item => item.category === "dessert")
      const pizza = menu.filter(item => item.category === "pizza")
      const soup = menu.filter(item => item.category === "soup")
@@ -40,20 +37,26 @@ const OurMenu = () => {
 
                <MenuCategory
                items={dessert}
-               title={'our dessert'}
+               title={'Our Dessert'}
                coverImg={dessertImg}
                ></MenuCategory>
 
                <MenuCategory
                items={pizza}
-               title={'our pizza'}
+               title={'Our Pizza'}
                coverImg={pizzaImg}
                ></MenuCategory>
 
                <MenuCategory
                items={salad}
-               title={'our salad'}
+               title={'Our Salad'}
                coverImg={saladImg}
+               ></MenuCategory>
+
+               <MenuCategory
+               items={soup}
+               title={'Our Soup'}
+               coverImg={soupImg}
                ></MenuCategory>
           </div>
      );

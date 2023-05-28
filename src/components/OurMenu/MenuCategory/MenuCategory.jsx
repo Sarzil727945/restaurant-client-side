@@ -7,7 +7,7 @@ const MenuCategory = ({ items, title, coverImg }) => {
           <div className='my-5'>
               <div className='my-4'>
               {
-                  title &&  <Cover bgImg={coverImg} title={'Our Menu'} ></Cover>
+                  title &&  <Cover bgImg={coverImg} title={title} ></Cover>
                }
               </div>
                <div className=' grid lg:grid-cols-2 gap-10'>
