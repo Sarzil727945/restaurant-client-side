@@ -24,7 +24,7 @@ const ChefCard = () => {
                <div className=' grid lg:grid-cols-4 gap-5 mb-5'>
                     {
                          card.map(item =>
-                              <div className="card card-compact w-100 bg-base-100 shadow-xl">
+                              <div className="card card-compact w-100 bg-base-100 shadow-xl" key={item._id}>
                                    <figure><img src={item.image} alt="Shoes" /></figure>
                                    <div className="card-body items-center text-center">
                                         <h2 className="card-title">{item.name}</h2>

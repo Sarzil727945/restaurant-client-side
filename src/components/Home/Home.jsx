@@ -7,8 +7,10 @@ import CallUs from './CallUs/CallUs';
 import ChefCard from './ChefCard/ChefCard';
 import Featured from './Featured/Featured';
 import Testimonials from './Testimonials/Testimonials';
+import useTitle from '../../hooks/useTitle';
 
 const Home = () => {
+     useTitle('Home')
      return (
           <div>
                <Banner></Banner>
