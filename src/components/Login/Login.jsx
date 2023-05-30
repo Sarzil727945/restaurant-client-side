@@ -1,6 +1,30 @@
 import React from 'react';
+import { useState } from 'react';
+import { useRef } from 'react';
+import { useEffect } from 'react';
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+
 
 const Login = () => {
+     const captchaRef = useRef(null)
+     const [disable, setDisable] = useState(true)
+
+     useEffect(()=>{
+          loadCaptchaEnginge(6); 
+     },[])
+
+
+     const handelCaptcha=(e)=>{
+     const user_captcha_value = captchaRef.current.value;
+     if (validateCaptcha(user_captcha_value)) {
+          setDisable(false)
+     }
+     else{
+          setDisable(true)
+     }
+
+     }
+
      const handelForm =(event)=>{
           event.preventDefault();
           const form = event.target
@@ -33,8 +57,15 @@ const Login = () => {
                                              <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                         </label>
                                    </div>
+                                   <div className="form-control">
+                                        <label className="label">
+                                        <LoadCanvasTemplate />
+                                        </label>
+                                        <input type="text" ref={captchaRef} name='captcha' placeholder="Type the captcha above" className="input input-bordered" />
+                                        <button onClick={handelCaptcha} className="btn btn-outline btn-info btn-xs mt-1" >captcha</button>
+                                   </div>
                                    <div className="form-control mt-6">
-                                        <button type='submit' className="btn btn-primary">Login</button>
+                                        <input disabled ={disable} type='submit' className="btn btn-primary" value='Login' />
                                    </div>
                               </form>
                          </div>
