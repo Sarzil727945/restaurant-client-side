@@ -6,6 +6,7 @@ import Home from "../components/Home/Home";
 import OurMenu from "../components/OurMenu/OurMenu";
 import Orders from "../components/Orders/Orders";
 import Login from "../components/Login/Login";
+import SingUp from "../components/SingUp/SingUp";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: 'login',
         element: <Login></Login>
+      },
+      {
+        path: 'signUp',
+        element: <SingUp></SingUp>
       },
     ]
   },

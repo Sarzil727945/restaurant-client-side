@@ -1,36 +1,68 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
+import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
+import useTitle from '../../hooks/useTitle';
 
 
 const Login = () => {
+     useTitle('Login')
+     //  captcha part start 
      const captchaRef = useRef(null)
      const [disable, setDisable] = useState(true)
 
-     useEffect(()=>{
-          loadCaptchaEnginge(6); 
-     },[])
+     useEffect(() => {
+          loadCaptchaEnginge(6);
+     }, [])
 
+     const handelCaptcha = (e) => {
+          const user_captcha_value = captchaRef.current.value;
+          if (validateCaptcha(user_captcha_value)) {
+               setDisable(false)
+          }
+          else {
+               setDisable(true)
+          }
 
-     const handelCaptcha=(e)=>{
-     const user_captcha_value = captchaRef.current.value;
-     if (validateCaptcha(user_captcha_value)) {
-          setDisable(false)
      }
-     else{
-          setDisable(true)
-     }
+     //  captcha part ends
 
-     }
+     const { signIn } = useContext(AuthContext)
 
-     const handelForm =(event)=>{
+     const handelForm = (event) => {
           event.preventDefault();
           const form = event.target
           const email = form.email.value;
           const password = form.password.value;
           console.log(email, password);
+
+          // Signed in part start
+          signIn(email, password)
+               .then((userCredential) => {
+                    const currentUser = userCredential.user;
+
+                    if (currentUser) {
+                         Swal.fire({
+                              title: 'Success!',
+                              text: 'Login Success !!',
+                              icon: 'success',
+                              confirmButtonText: 'Ok'
+                         })
+                    }
+                    form.reset()
+                    setEmail('')
+                    navigate(from, { replace: true })
+                    setSuccess('Sign in successFull')
+               })
+               .catch((error) => {
+                    const errorMessage = error.message;
+                    setError(errorMessage)
+               });
+          // Signed in part end
      }
      return (
           <div>
@@ -59,15 +91,16 @@ const Login = () => {
                                    </div>
                                    <div className="form-control">
                                         <label className="label">
-                                        <LoadCanvasTemplate />
+                                             <LoadCanvasTemplate />
                                         </label>
                                         <input type="text" ref={captchaRef} name='captcha' placeholder="Type the captcha above" className="input input-bordered" />
                                         <button onClick={handelCaptcha} className="btn btn-outline btn-info btn-xs mt-1" >captcha</button>
                                    </div>
                                    <div className="form-control mt-6">
-                                        <input disabled ={disable} type='submit' className="btn btn-primary" value='Login' />
+                                        <input disabled={disable} type='submit' className="btn btn-primary" value='Login' />
                                    </div>
                               </form>
+                              <p> <small>New Here?</small> <Link to='/signUp'>Create an account</Link></p>
                          </div>
                     </div>
                </div>
