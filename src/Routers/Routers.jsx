@@ -9,6 +9,8 @@ import Login from "../components/Login/Login";
 import SingUp from "../components/SingUp/SingUp";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Secret from "../shared/Secret/Secret";
+import Dashboard from "../Laout/Dashboard";
+import MyCard from "../components/Dashboard/MyCard/MyCard";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +45,16 @@ export const router = createBrowserRouter([
         path: 'secret',
         element: <PrivateRoute><Secret></Secret></PrivateRoute>
       },
+    ]
+  },
+  {
+    path: "dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: 'myCard',
+        element: <MyCard></MyCard>
+      }
     ]
   },
 ]);

@@ -45,7 +45,7 @@ const Header = () => {
                               <li><ActiveLink to='order'>Our Order</ActiveLink></li>
                               <li><ActiveLink to='secret'>Secret</ActiveLink></li>
                               <li>
-                                   <Link to='/'>
+                                   <Link to='/dashboard/myCard'>
                                         <button className="btn gap-2">
                                              <FaShoppingCart />
                                              <div className="badge badge-secondary">+{card?.length || 0}</div>
