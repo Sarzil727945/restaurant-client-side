@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import ActiveLink from '../../ActiveLink/ActiveLink';
 import { FaShoppingCart } from 'react-icons/fa';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
+import useCard from '../../hooks/useCard';
 
 
 const Header = () => {
      const { user, logOut } = useContext(AuthContext)
+     const [card] = useCard()
      // logOut part start
      const handelLogOut = () => {
           logOut()
@@ -18,6 +20,7 @@ const Header = () => {
                });
      }
      // logOut part end
+
 
      return (
           <div>
@@ -45,7 +48,7 @@ const Header = () => {
                                    <Link to='/'>
                                         <button className="btn gap-2">
                                              <FaShoppingCart />
-                                             <div className="badge badge-secondary">+0</div>
+                                             <div className="badge badge-secondary">+{card?.length || 0}</div>
                                         </button>
                                    </Link>
                               </li>
