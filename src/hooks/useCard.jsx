@@ -6,7 +6,7 @@ const useCard = () =>{
      const { refetch, data: card = [] } = useQuery({
           queryKey: ['cards', user?.email],
           queryFn:  async () => {
-               const res = await fetch(`http://localhost:5000/cards?email=${user?.email}`)
+               const res = await fetch(`https://restaurant-server-side-kpacpuzdc-sarzil727945.vercel.app/cards?email=${user?.email}`)
                return res.json();
              },
         })

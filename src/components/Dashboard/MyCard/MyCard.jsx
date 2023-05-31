@@ -8,7 +8,7 @@ const MyCard = () => {
      const total = card.reduce((sum, item) => item.price + sum, 0)
      return (
           <div>
-               <div className=' uppercase flex justify-evenly font-bold'>
+               <div className=' uppercase flex justify-evenly font-semibold'>
                     <h3 className="text-3xl">Total Items : {card.length}</h3>
                     <h3 className="text-3xl">Total Prices : ${total.toFixed(2)}</h3>
                     <button className="btn btn-warning btn-sm">Pay</button>
