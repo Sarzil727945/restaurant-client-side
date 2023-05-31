@@ -5,12 +5,19 @@ import { useEffect } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useTitle from '../../hooks/useTitle';
 
 
 const Login = () => {
      useTitle('Login')
+     const location = useLocation()
+     const navigate = useNavigate()
+
+     const from = location.state?.from?.pathname || '/';
+     const emailRef = useRef();
+
+
      //  captcha part start 
      const captchaRef = useRef(null)
      const [disable, setDisable] = useState(true)
@@ -30,6 +37,7 @@ const Login = () => {
 
      }
      //  captcha part ends
+     
 
      const { signIn } = useContext(AuthContext)
 
@@ -54,13 +62,10 @@ const Login = () => {
                          })
                     }
                     form.reset()
-                    setEmail('')
                     navigate(from, { replace: true })
-                    setSuccess('Sign in successFull')
                })
                .catch((error) => {
                     const errorMessage = error.message;
-                    setError(errorMessage)
                });
           // Signed in part end
      }

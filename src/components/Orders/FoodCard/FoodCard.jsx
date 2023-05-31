@@ -1,7 +1,11 @@
 import React from 'react';
 
 const FoodCard = ({ item }) => {
-     const { image, name, recipe,price } = item;
+     const { image, name, recipe, price } = item;
+
+     const handelAddToCart = (item) =>{
+          console.log(item);
+     }
      return (
           <div>
                
@@ -12,7 +16,7 @@ const FoodCard = ({ item }) => {
                               <h2 className="card-title">{name}</h2>
                               <p>{recipe}</p>
                               <div className="card-actions my-5">
-                                   <button className="btn btn-primary uppercase">add to cart</button>
+                                   <button onClick={()=> handelAddToCart(item)} className="btn btn-primary uppercase">add to cart</button>
                               </div>
                          </div>
                     </div>

@@ -1,14 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useTitle from '../../hooks/useTitle';
+import { useContext } from 'react';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
+import Swal from 'sweetalert2';
+import { updateProfile } from 'firebase/auth';
+
 
 const SingUp = () => {
      useTitle('SingUp')
-     const { register, handleSubmit, watch, formState: { errors } } = useForm();
+     const [error, setError] = useState('')
+     const navigate = useNavigate()
+
+     const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
+
+     const { createUser } = useContext(AuthContext)
+
      const onSubmit = data => {
           console.log(data);
+                  // Signed up part start
+                  createUser(data.email, data.password)
+                  .then((userCredential) => {
+                       const currentUser = userCredential.user;
+                       if (currentUser) {
+                         Swal.fire({
+                              title: 'Success!',
+                              text: 'Login Success !!',
+                              icon: 'success',
+                              confirmButtonText: 'Ok'
+                         })
+                    }
+                    reset()
+                    navigate('/')
+                    upDataUser(currentUser, data.name, data.photo)
+                  })
+                  .catch((error) => {
+                       const errorMessage = error.message;
+                       setError(errorMessage)
+                  });
+             // Signed up part end
      }
+
+     const upDataUser = (user, name, photoUrl) => {
+          updateProfile(user, {
+               displayName: name,
+               photoURL: photoUrl
+          })
+               .then(() => {
+                    // Profile updated!
+                    // ...
+               }).catch((error) => {
+                    setError(error.message)
+               });
+     }
+
      return (
           <div>
                <div className="hero min-h-screen bg-base-200">
@@ -24,6 +70,13 @@ const SingUp = () => {
                                              <span className="label-text">Name</span>
                                         </label>
                                         <input type="text" placeholder="Name" {...register("name", { required: true })} name='name' className="input input-bordered" />
+                                        {errors.name && <span className=' text-red-500 mt-1'>email is required</span>}
+                                   </div>
+                                   <div className="form-control">
+                                        <label className="label">
+                                             <span className="label-text">Photo URL</span>
+                                        </label>
+                                        <input type="text" placeholder="Photo URL" {...register("photo")} name='photo' className="input input-bordered" />
                                    </div>
                                    <div className="form-control">
                                         <label className="label">
@@ -51,6 +104,7 @@ const SingUp = () => {
                                    <div className="form-control mt-6">
                                         <button className="btn btn-primary">Sign Up</button>
                                    </div>
+                                   <p>{error}</p>
                               </form>
                               <p><Link to='/login'>login</Link></p>
                          </div>

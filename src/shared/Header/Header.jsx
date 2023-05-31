@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import ActiveLink from '../../ActiveLink/ActiveLink';
+import { FaShoppingCart } from 'react-icons/fa';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
+
 
 const Header = () => {
+     const { user, logOut } = useContext(AuthContext)
+     // logOut part start
+     const handelLogOut = () => {
+          logOut()
+               .then(() => {
+                    // Sign-out successful.
+               })
+               .catch((error) => {
+                    // An error happened.
+               });
+     }
+     // logOut part end
+
      return (
           <div>
                <div className="navbar fixed z-10 bg-opacity-30 bg-black lg:text-white max-w-screen-xl ">
@@ -24,12 +40,25 @@ const Header = () => {
                               <li><ActiveLink to='/'>Home</ActiveLink></li>
                               <li><ActiveLink to='ourMenu'>Our Menu</ActiveLink></li>
                               <li><ActiveLink to='order'>Our Order</ActiveLink></li>
-                              <li><ActiveLink to='login'>Login</ActiveLink></li>
-                              <li><a>Item 3</a></li>
+                              <li><ActiveLink to='secret'>Secret</ActiveLink></li>
+                              <li>
+                                   <Link to='/'>
+                                        <button className="btn gap-2">
+                                             <FaShoppingCart />
+                                             <div className="badge badge-secondary">+0</div>
+                                        </button>
+                                   </Link>
+                              </li>
                          </ul>
                     </div>
                     <div className="navbar-end">
-                         <a className="btn">Get started</a>
+                         {
+                              user ? <div>
+                                    <span className=' me-3'>{user?.displayName}</span>
+                                   <button onClick={handelLogOut} className="btn btn-error py-1">Log Out</button>
+
+                              </div> : <ActiveLink to="/login">Login</ActiveLink>
+                         }
                     </div>
                </div>
           </div>
