@@ -11,6 +11,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Secret from "../shared/Secret/Secret";
 import Dashboard from "../Laout/Dashboard";
 import MyCard from "../components/Dashboard/MyCard/MyCard";
+import AllUsers from "../components/AllUsers/AllUsers";
 
 export const router = createBrowserRouter([
   {
@@ -54,7 +55,12 @@ export const router = createBrowserRouter([
       {
         path: 'myCard',
         element: <MyCard></MyCard>
-      }
+      },
+      {
+        path: 'users',
+        element: <AllUsers></AllUsers>
+      },
+
     ]
   },
 ]);

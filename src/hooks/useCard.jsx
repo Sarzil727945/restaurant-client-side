@@ -1,15 +1,21 @@
 import { useQuery } from '@tanstack/react-query'
 import { useContext } from 'react'
 import { AuthContext } from '../AuthProvider/AuthProvider'
-const useCard = () =>{
-     const {user} = useContext(AuthContext);
+import useAxiosSecure from './useAxiouSeoure';
+const useCard = () => {
+     const { user, loading } = useContext(AuthContext);
+     // jwt verify part 
+     // const token = localStorage.getItem('access-token')
+     const [axiosSecure] = useAxiosSecure();
+
      const { refetch, data: card = [] } = useQuery({
           queryKey: ['cards', user?.email],
-          queryFn:  async () => {
-               const res = await fetch(`https://restaurant-server-side-kpacpuzdc-sarzil727945.vercel.app/cards?email=${user?.email}`)
-               return res.json();
-             },
-        })
-        return [card, refetch]
+          enabled: !loading,
+          queryFn: async () => {
+               const res = await axiosSecure(`/cards?email=${user?.email}`)
+               return res.data;
+          },
+     })
+     return [card, refetch]
 }
 export default useCard;

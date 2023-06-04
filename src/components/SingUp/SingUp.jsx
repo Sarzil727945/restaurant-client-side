@@ -23,17 +23,33 @@ const SingUp = () => {
                   createUser(data.email, data.password)
                   .then((userCredential) => {
                        const currentUser = userCredential.user;
-                       if (currentUser) {
-                         Swal.fire({
-                              title: 'Success!',
-                              text: 'Login Success !!',
-                              icon: 'success',
-                              confirmButtonText: 'Ok'
-                         })
-                    }
-                    reset()
-                    navigate('/')
-                    upDataUser(currentUser, data.name, data.photo)
+                  // user information post data page start 
+                  const saveUser = {name: data.name, email: data.email}
+                  fetch('http://localhost:5000/users',{
+                       method: 'POST',
+                       headers: {
+                            'content-type':'application/json'
+                       },
+                       body: JSON.stringify(saveUser)
+                  })
+                  .then(res => res.json())
+                  .then(data => {
+                       if (data.insertedId) {
+                            if (currentUser) {
+                                 Swal.fire({
+                                      title: 'Success!',
+                                      text: 'Register Success !!',
+                                      icon: 'success',
+                                      confirmButtonText: 'Ok'
+                                 })
+                            }
+                            reset()
+                            navigate('/')
+                            upDataUser(currentUser, data.name, data.photo)
+                       }
+                  })
+                  // user information post data page end
+                   
                   })
                   .catch((error) => {
                        const errorMessage = error.message;
